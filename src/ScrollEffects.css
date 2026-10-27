@@ -1,0 +1,56 @@
+/* Scroll-driven panel stacking and artwork parallax. */
+.scroll-panel {
+  position: relative;
+  isolation: isolate;
+}
+
+.scroll-parallax {
+  will-change: translate;
+}
+
+@supports (animation-timeline: view()) {
+  .scroll-panel {
+    animation: stack-panel linear both;
+    animation-timeline: view();
+    animation-range: exit 0% exit 100%;
+    transform-origin: center top;
+  }
+
+  .scroll-parallax {
+    animation: parallax-drift linear both;
+    animation-timeline: view();
+    animation-range: entry 0% exit 100%;
+  }
+
+  @keyframes stack-panel {
+    from {
+      scale: 1;
+      border-radius: 0;
+      filter: brightness(1);
+    }
+
+    to {
+      scale: 1 0.94;
+      border-radius: 24px;
+      filter: brightness(0.82);
+    }
+  }
+
+  @keyframes parallax-drift {
+    from {
+      translate: 0 7%;
+    }
+
+    to {
+      translate: 0 -7%;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-panel,
+  .scroll-parallax {
+    animation: none !important;
+    will-change: auto;
+  }
+}

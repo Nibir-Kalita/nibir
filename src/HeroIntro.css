@@ -2,6 +2,8 @@
   height: max(700px, 100svh);
   min-height: 700px;
   max-height: 1000px;
+  background: #f1f1f1;
+  color: #010101;
   padding-top: 115px;
   padding-bottom: 48px;
   display: flex;
@@ -27,8 +29,8 @@
   overflow: hidden;
   background: radial-gradient(
     ellipse at 50% 56%,
-    #1d1d1a 0%,
-    #10100f 54%,
+    #dededb 0%,
+    #f1f1f1 54%,
     transparent 73%
   );
 }
@@ -84,6 +86,7 @@
 }
 .hero-meta {
   z-index: 1;
+  color: #565656;
 }
 @media (max-width: 850px) {
   .hero-intro-layout {
@@ -135,7 +138,7 @@
     min-height: 0;
     max-height: 610px;
     width: min(78vw, 390px);
-    background: radial-gradient(ellipse at center, #171715 0%, #0a0a09 72%);
+    background: radial-gradient(ellipse at center, #dededb 0%, #f1f1f1 72%);
   }
   .hero-portrait img {
     object-fit: contain;
@@ -156,7 +159,7 @@
     font-size: clamp(88px, 24vw, 145px);
     margin: 0;
     transform: rotate(-10deg);
-    color: #e9e6de;
+    color: #010101;
     white-space: nowrap;
   }
   .hero-intro-copy h1 {
@@ -164,9 +167,9 @@
     right: 2%;
     bottom: 16%;
     font-size: clamp(55px, 15.2vw, 92px);
-    color: #f1eee6;
+    color: #010101;
     white-space: nowrap;
-    text-shadow: 0 2px 22px #090908;
+    text-shadow: 0 2px 22px #f1f1f180;
   }
   .hero-intro-copy h1 i {
     color: #aaa69e;
