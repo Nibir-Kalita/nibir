@@ -1,5 +1,11 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
+import './Intro.css'
+import './IntroLayout.css'
+import './SignatureFont.css'
+import './HeroIntro.css'
+import './HeroIntroFix.css'
+import fireflyPortrait from '../Firefly.png'
 
 const projects = [
   { number: '01', name: 'CarbonLens', category: 'Climate tech · Blockchain', description: 'A blue-carbon registry concept that brings satellite-based monitoring and transparent project records together.', visual: 'carbon', status: 'Concept exploration', link: 'https://carbonlens.space/' },
@@ -15,13 +21,6 @@ const capabilities = [
   { number: '03', title: 'Product thinking', text: 'Connecting the problem, the people, and the details that make a product work.' },
 ]
 
-function ThreadMark() {
-  return <svg className="thread-mark" viewBox="0 0 1200 700" fill="none" aria-hidden="true">
-    <path d="M38 152C174 30 302 58 365 149c74 107-67 162-184 206-137 52-163 126-63 177 116 60 290-16 476-102 244-113 385-108 442-37 52 64 10 151-68 163-80 12-126-70-73-124 42-34 91-25 115 1 36 38 4 88-38 94" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"/>
-    <circle cx="38" cy="152" r="5" fill="currentColor"/><circle cx="972" cy="627" r="7" fill="currentColor"/>
-  </svg>
-}
-
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
   const closeMenu = () => setMenuOpen(false)
@@ -32,6 +31,21 @@ function Header() {
       <a href="#capabilities" onClick={closeMenu}>CAPABILITIES</a><a href="#projects" onClick={closeMenu}>PROJECTS</a><a href="#about" onClick={closeMenu}>ABOUT</a><a href="#contact" onClick={closeMenu}>CONTACT</a>
     </nav>
   </header>
+}
+
+function IntroLoader({ phase, onSkip }) {
+  return <section className={`intro-loader ${phase === 'leaving' ? 'is-leaving' : ''}`} aria-label="Portfolio introduction">
+    <div className="intro-loader-top"><span>NK <i>—</i></span><span>AN INTRODUCTION / 2026</span></div>
+    <svg className="signature-art" viewBox="0 0 1200 250" role="img" aria-labelledby="signature-title">
+      <title id="signature-title">Nibir Kalita — animated signature-style wordmark</title>
+      <path className="signature-flourish" d="M22 135C104 135 151 133 210 127C293 119 332 102 305 75C278 47 216 63 187 101C164 132 179 158 218 157C257 156 277 129 304 95C324 70 345 45 354 50C365 56 322 130 315 148C308 166 328 146 341 129C361 103 377 77 386 84C393 89 370 133 369 146C368 159 386 147 398 133"/>
+      <text className="signature-name" x="393" y="151">Nibir Kalita</text>
+      <path className="signature-underline" d="M390 177C533 186 673 166 817 157C946 149 1068 151 1178 132"/>
+      <path className="signature-tail" d="M793 159C780 187 765 211 751 231C780 205 809 177 833 151"/>
+    </svg>
+    <div className="intro-loader-bottom"><p>Developer, designer, and curious builder.<br/>A portfolio by Nibir Kalita.</p><div className="intro-progress" aria-hidden="true"><i/></div><button type="button" onClick={onSkip}>ENTER PORTFOLIO <span>↗</span></button></div>
+    <span className="intro-loader-note">JORHAT, ASSAM / INDIA</span>
+  </section>
 }
 
 function ProjectVisual({ kind }) {
@@ -58,14 +72,37 @@ function ProjectCard({ project }) {
 }
 
 function App() {
-  return <div className="site-shell" id="home">
+  const [introPhase, setIntroPhase] = useState('loading')
+
+  useEffect(() => {
+    if (introPhase !== 'loading') return undefined
+    const timer = window.setTimeout(() => setIntroPhase('leaving'), 3200)
+    return () => window.clearTimeout(timer)
+  }, [introPhase])
+
+  useEffect(() => {
+    if (introPhase !== 'leaving') return undefined
+    const timer = window.setTimeout(() => setIntroPhase('done'), 700)
+    return () => window.clearTimeout(timer)
+  }, [introPhase])
+
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow
+    if (introPhase !== 'done') document.body.style.overflow = 'hidden'
+    else document.body.style.overflow = previousOverflow
+    return () => { document.body.style.overflow = previousOverflow }
+  }, [introPhase])
+
+  return <>
+    <div className={`site-shell site-content ${introPhase === 'done' ? 'is-ready' : ''}`} id="home" aria-hidden={introPhase !== 'done'} inert={introPhase !== 'done'}>
     <Header/>
     <main id="main-content">
       <section className="hero" aria-labelledby="hero-title">
-        <div className="hero-meta"><span>COMPUTER SCIENCE · DESIGN · BUILDING</span><span>JORHAT, ASSAM / INDIA</span></div><ThreadMark/>
-        <h1 id="hero-title"><span>I BUILD</span><span>DIGITAL</span><span>EXPERIENCES<span className="hero-period">.</span></span></h1>
-        <div className="hero-bottom"><p>Developer, designer, and curious builder turning ideas into useful things.</p><a className="scroll-link" href="#capabilities">SCROLL TO FOLLOW THE THREAD <span>↓</span></a></div>
-        <span className="hero-coordinate">26°45′N<br/>94°12′E</span>
+        <div className="hero-meta"><span>COMPUTER SCIENCE · DESIGN · BUILDING</span><span>JORHAT, ASSAM / INDIA</span></div>
+        <div className="hero-intro-layout">
+          <div className="hero-portrait"><img src={fireflyPortrait} alt="Portrait of Nibir Kalita" fetchPriority="high"/></div>
+          <div className="hero-intro-copy"><p className="hero-hello">Hi</p><h1 id="hero-title">I’m <span>Nibir</span><i>.</i></h1><p className="hero-intro-subtitle">Developer, designer, and curious builder turning ideas into useful things.</p><a className="scroll-link" href="#capabilities">SCROLL TO EXPLORE <span>↓</span></a></div>
+        </div>
       </section>
       <section className="intro-section" id="capabilities">
         <div className="intro-copy"><p className="eyebrow">A LITTLE ABOUT THE WAY I WORK</p><h2>From what people need<br/>to what feels <em>right.</em></h2><p className="intro-description">I connect human intent, product behavior, and the systems underneath — with curiosity at every step.</p></div>
@@ -89,7 +126,9 @@ function App() {
       <section className="contact-section" id="contact"><div><p className="eyebrow">HAVE AN IDEA? OR JUST WANT TO SAY HI?</p><h2>Let’s make<br/>something<span>.</span></h2><p>I’m always glad to meet curious people, talk through an idea, or explore a collaboration.</p></div><div className="contact-card"><span>OPEN TO</span><h3>Learning.<br/>Building.<br/>Collaborating.</h3><a href="https://github.com/Raag-Nibir" target="_blank" rel="noreferrer">FIND ME ON GITHUB <b>↗</b></a><a href="https://github.com/Nibir-Kalita" target="_blank" rel="noreferrer">ALSO ON GITHUB <b>↗</b></a><small>Email and LinkedIn can be added when you’re ready to share those details.</small></div></section>
     </main>
     <footer className="site-footer"><a className="brand" href="#home">NK<span>—</span></a><p>Designed with curiosity.<br/>Built with purpose.</p><span>© NIBIR KALITA / 2026</span><a href="#home" className="back-top">BACK TO TOP ↑</a></footer>
-  </div>
+    </div>
+    {introPhase !== 'done' && <IntroLoader phase={introPhase} onSkip={() => setIntroPhase('leaving')}/>}
+  </>
 }
 
 export default App
