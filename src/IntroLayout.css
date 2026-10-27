@@ -1,2 +1,8 @@
-.signature-art{top:22%}
-@media(max-width:620px){.signature-art{top:25%}}
+.signature-art {
+  top: 22%;
+}
+@media (max-width: 620px) {
+  .signature-art {
+    top: 25%;
+  }
+}
