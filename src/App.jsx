@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import './Intro.css'
 import './IntroLayout.css'
+import './IntroSignature.css'
 import './SignatureFont.css'
 import './HeroIntro.css'
 import './HeroIntroFix.css'
@@ -33,18 +34,12 @@ function Header() {
   </header>
 }
 
-function IntroLoader({ phase, onSkip }) {
+function IntroLoader({ phase }) {
   return <section className={`intro-loader ${phase === 'leaving' ? 'is-leaving' : ''}`} aria-label="Portfolio introduction">
-    <div className="intro-loader-top"><span>NK <i>—</i></span><span>AN INTRODUCTION / 2026</span></div>
-    <svg className="signature-art" viewBox="0 0 1200 250" role="img" aria-labelledby="signature-title">
+    <svg className="signature-art" viewBox="0 0 1200 300" role="img" aria-labelledby="signature-title">
       <title id="signature-title">Nibir Kalita — animated signature-style wordmark</title>
-      <path className="signature-flourish" d="M22 135C104 135 151 133 210 127C293 119 332 102 305 75C278 47 216 63 187 101C164 132 179 158 218 157C257 156 277 129 304 95C324 70 345 45 354 50C365 56 322 130 315 148C308 166 328 146 341 129C361 103 377 77 386 84C393 89 370 133 369 146C368 159 386 147 398 133"/>
-      <text className="signature-name" x="393" y="151">Nibir Kalita</text>
-      <path className="signature-underline" d="M390 177C533 186 673 166 817 157C946 149 1068 151 1178 132"/>
-      <path className="signature-tail" d="M793 159C780 187 765 211 751 231C780 205 809 177 833 151"/>
+      <text className="signature-name" x="600" y="190" textAnchor="middle" textLength="1040" lengthAdjust="spacingAndGlyphs">Nibir Kalita</text>
     </svg>
-    <div className="intro-loader-bottom"><p>Developer, designer, and curious builder.<br/>A portfolio by Nibir Kalita.</p><div className="intro-progress" aria-hidden="true"><i/></div><button type="button" onClick={onSkip}>ENTER PORTFOLIO <span>↗</span></button></div>
-    <span className="intro-loader-note">JORHAT, ASSAM / INDIA</span>
   </section>
 }
 
@@ -127,7 +122,7 @@ function App() {
     </main>
     <footer className="site-footer"><a className="brand" href="#home">NK<span>—</span></a><p>Designed with curiosity.<br/>Built with purpose.</p><span>© NIBIR KALITA / 2026</span><a href="#home" className="back-top">BACK TO TOP ↑</a></footer>
     </div>
-    {introPhase !== 'done' && <IntroLoader phase={introPhase} onSkip={() => setIntroPhase('leaving')}/>}
+    {introPhase !== 'done' && <IntroLoader phase={introPhase}/>}
   </>
 }
 
