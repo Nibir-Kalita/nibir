@@ -1,210 +1,95 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import './App.css'
 
 const projects = [
-  {
-    name: 'CarbonLens',
-    type: 'Concept · Sustainability · Blockchain',
-    description: 'A blue-carbon registry platform concept combining blockchain with satellite-based Measurement, Reporting, and Verification (MRV).',
-    note: 'Concept / project exploration',
-    visual: 'carbon',
-    link: 'https://carbonlens.space/',
-    linkLabel: 'Visit CarbonLens',
-  },
-  {
-    name: 'Academic Information Portal',
-    type: 'Internship · Education · Data',
-    description: 'An academic information management portal developed during an internship project associated with IIT Guwahati. Focused on organizing academic records through structured workflows and a PostgreSQL-backed data model.',
-    note: 'Academic internship project',
-    visual: 'campus',
-  },
-  {
-    name: 'SkinWise',
-    type: 'AI exploration · Healthcare',
-    description: 'An AI-oriented skin disease detection project exploring image-based skin condition analysis and how machine learning might support healthcare workflows.',
-    note: 'Exploratory project',
-    visual: 'skinwise',
-  },
-  {
-    name: 'HireWise',
-    type: 'Product exploration · Recruitment',
-    description: 'A hiring and recruitment workflow project exploring ways to connect candidates and opportunities more efficiently.',
-    note: 'Product exploration',
-    visual: 'hirewise',
-  },
-  {
-    name: 'Tourism-NE',
-    type: 'Web application · Northeast India',
-    description: 'A tourism-focused web application concept showcasing destinations and travel opportunities across Northeast India.',
-    note: 'Frontend project',
-    visual: 'tourism',
-  },
+  { number: '01', name: 'CarbonLens', category: 'Climate tech · Blockchain', description: 'A blue-carbon registry concept that brings satellite-based monitoring and transparent project records together.', visual: 'carbon', status: 'Concept exploration', link: 'https://carbonlens.space/' },
+  { number: '02', name: 'Academic Portal', category: 'Education · Data systems', description: 'An academic information portal developed during an internship project associated with IIT Guwahati.', visual: 'campus', status: 'Academic project' },
+  { number: '03', name: 'SkinWise', category: 'AI · Healthcare', description: 'An exploration of image-based skin analysis and how machine learning could support healthcare workflows.', visual: 'skin', status: 'Exploration' },
+  { number: '04', name: 'HireWise', category: 'Product · Recruitment', description: 'A hiring workflow concept focused on making it easier to connect candidates with relevant opportunities.', visual: 'hire', status: 'Product exploration' },
+  { number: '05', name: 'Tourism-NE', category: 'Web · Northeast India', description: 'A destination discovery experience celebrating the landscapes and local character of Northeast India.', visual: 'tourism', status: 'Frontend project' },
 ]
 
-const skillGroups = [
-  ['Programming', ['C', 'C++', 'Python', 'JavaScript', 'TypeScript']],
-  ['Frontend', ['HTML', 'CSS', 'React', 'Vite', 'Tailwind CSS']],
-  ['Data & backend', ['PostgreSQL', 'MySQL', 'MongoDB', 'SQLAlchemy']],
-  ['Tools & making', ['Git & GitHub', 'Docker', 'Figma', 'Canva', 'Notion', 'FL Studio']],
+const capabilities = [
+  { number: '01', title: 'Digital experiences', text: 'Thoughtful interfaces that make complex ideas feel clear, useful, and human.' },
+  { number: '02', title: 'Intelligent systems', text: 'Exploring practical applications of AI, data, and emerging technology.' },
+  { number: '03', title: 'Product thinking', text: 'Connecting the problem, the people, and the details that make a product work.' },
 ]
+
+function ThreadMark() {
+  return <svg className="thread-mark" viewBox="0 0 1200 700" fill="none" aria-hidden="true">
+    <path d="M38 152C174 30 302 58 365 149c74 107-67 162-184 206-137 52-163 126-63 177 116 60 290-16 476-102 244-113 385-108 442-37 52 64 10 151-68 163-80 12-126-70-73-124 42-34 91-25 115 1 36 38 4 88-38 94" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"/>
+    <circle cx="38" cy="152" r="5" fill="currentColor"/><circle cx="972" cy="627" r="7" fill="currentColor"/>
+  </svg>
+}
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
   const closeMenu = () => setMenuOpen(false)
   return <header className="topbar">
-    <a className="brand" href="#home" aria-label="Nibir Kalita — homepage"><span>NK</span></a>
-    <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle navigation" aria-expanded={menuOpen}><i/><i/></button>
-    <nav className={menuOpen ? 'nav-links open' : 'nav-links'} aria-label="Main navigation">
-      <a href="#work" onClick={closeMenu}>Selected work</a>
-      <a href="#about" onClick={closeMenu}>About</a>
-      <a href="#skills" onClick={closeMenu}>Skills</a>
-      <a href="#experience" onClick={closeMenu}>Experience</a>
+    <a className="brand" href="#home" aria-label="Nibir Kalita home">NK<span>—</span></a>
+    <button className="menu-toggle" type="button" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle navigation" aria-expanded={menuOpen}><i/><i/></button>
+    <nav className={menuOpen ? 'nav-links open' : 'nav-links'} aria-label="Primary navigation">
+      <a href="#capabilities" onClick={closeMenu}>CAPABILITIES</a><a href="#projects" onClick={closeMenu}>PROJECTS</a><a href="#about" onClick={closeMenu}>ABOUT</a><a href="#contact" onClick={closeMenu}>CONTACT</a>
     </nav>
-    <a className="pill pill-light top-cta" href="#contact"><span>Let’s Connect</span><span aria-hidden="true">↗</span></a>
   </header>
 }
 
-function PortfolioProject({ project, index, onOpen }) {
-  return <button className={`project-card project-${index}`} type="button" onClick={() => onOpen(project)} aria-label={`View details for ${project.name}`}>
-    <ProjectPreview kind={project.visual}/>
-    <span className="project-shade"/>
-    <span className="project-meta"><span><strong>{project.name}</strong><small>{project.type}</small></span><span className="project-arrow">↗</span></span>
-    <span className="project-index">0{index + 1}</span>
-  </button>
-}
-
-function ProjectPreview({ kind }) {
-  return <span className={`project-preview preview-${kind}`} aria-hidden="true">
-    <span className="preview-orb"/>
-    <span className="preview-window">
-      <span className="preview-bar"><i/><i/><i/></span>
-      <span className="preview-content">
-        {kind === 'carbon' && <><span className="preview-label">BLUE CARBON · REGISTRY</span><b>Restoring<br/>coastal nature.</b><span className="preview-chart"><i/><i/><i/><i/><i/><i/><i/><i/><i/></span><span className="preview-button">Explore projects ↗</span></>}
-        {kind === 'campus' && <><span className="preview-label">ACADEMIC PORTAL</span><b>Information,<br/>in one place.</b><span className="preview-panels"><i/><i/><i/></span><span className="preview-lines"><i/><i/><i/></span></>}
-        {kind === 'skinwise' && <><span className="preview-label">SKINWISE · AI EXPLORATION</span><b>Understand<br/>your skin.</b><span className="preview-skin"><i/></span><span className="preview-button">Start a check →</span></>}
-        {kind === 'hirewise' && <><span className="preview-label">HIREWISE · TALENT</span><b>Find your<br/>next match.</b><span className="preview-profile"><i/><i/><i/></span><span className="preview-lines"><i/><i/><i/></span></>}
-        {kind === 'tourism' && <><span className="preview-label">DISCOVER THE NORTHEAST</span><b>Closer to<br/>the wild.</b><span className="preview-landscape"><i/><i/><i/></span><span className="preview-button">Find your journey ↗</span></>}
-      </span>
-    </span>
-  </span>
-}
-
-function ProjectDialog({ project, onClose }) {
-  useEffect(() => {
-    if (!project) return undefined
-    const handleKey = (event) => { if (event.key === 'Escape') onClose() }
-    window.addEventListener('keydown', handleKey)
-    return () => window.removeEventListener('keydown', handleKey)
-  }, [project, onClose])
-  if (!project) return null
-  return <div className="dialog-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) onClose() }}>
-    <section className="project-dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title">
-      <button className="dialog-close" onClick={onClose} aria-label="Close project details">×</button>
-      <p className="eyebrow">{project.note}</p>
-      <h2 id="dialog-title">{project.name}</h2>
-      <p className="dialog-type">{project.type}</p>
-      <p className="dialog-description">{project.description}</p>
-      {project.link && <a className="pill pill-light" href={project.link} target="_blank" rel="noreferrer">{project.linkLabel} <span>↗</span></a>}
-      {!project.link && <p className="dialog-note">Details describe the project scope provided; no public demo link was supplied.</p>}
-    </section>
+function ProjectVisual({ kind }) {
+  return <div className={`project-visual visual-${kind}`} aria-hidden="true">
+    <div className="visual-orbit orbit-a"/><div className="visual-orbit orbit-b"/>
+    <div className="mock-window">
+      <div className="mock-top"><span/><span/><span/><b>{kind === 'carbon' ? 'CARBONLENS / OVERVIEW' : `${kind.toUpperCase()} / WORKSPACE`}</b></div>
+      <div className="mock-body">
+        {kind === 'carbon' && <><span className="mock-kicker">BLUE CARBON REGISTRY</span><strong>Restore nature.<br/>Track the impact.</strong><div className="mock-chart"><i/><i/><i/><i/><i/><i/><i/><i/></div><div className="mock-stats"><span>PROJECTS <b>24</b></span><span>HECTARES <b>8.6k</b></span><span>STATUS <b>Verified</b></span></div></>}
+        {kind === 'campus' && <><span className="mock-kicker">ACADEMIC INFORMATION PORTAL</span><strong>Everything<br/>in one place.</strong><div className="mock-panel-row"><i/><i/><i/></div><div className="mock-lines"><i/><i/><i/></div></>}
+        {kind === 'skin' && <><span className="mock-kicker">SKINWISE / AI EXPLORATION</span><strong>Care starts<br/>with a question.</strong><div className="skin-orb"/><div className="mock-action">IMAGE ANALYSIS <span>↗</span></div></>}
+        {kind === 'hire' && <><span className="mock-kicker">HIREWISE / TALENT</span><strong>Find the right<br/>next step.</strong><div className="candidate-list"><i/><i/><i/><i/></div><div className="mock-lines"><i/><i/></div></>}
+        {kind === 'tourism' && <><span className="mock-kicker">NORTHEAST INDIA / DISCOVER</span><strong>Take the<br/>scenic route.</strong><div className="landscape"><i/><i/><i/></div><div className="mock-action">EXPLORE THE REGION <span>↗</span></div></>}
+      </div>
+    </div><span className="visual-stamp">NK / 2026</span>
   </div>
 }
 
-function ContactForm() {
-  const [sent, setSent] = useState(false)
-  const handleSubmit = (event) => {
-    event.preventDefault()
-    setSent(true)
-  }
-  return <form className="contact-form" onSubmit={handleSubmit}>
-    <p className="eyebrow">A NOTE TO NIBIR</p>
-    <h3>{sent ? 'Thanks for reaching out.' : 'Have something in mind?'}</h3>
-    {sent ? <p className="form-confirmation">This demo form doesn’t send messages yet. Connect a preferred email or form service to receive submissions.</p> : <>
-      <div className="form-fields">
-        <label>Your name<input name="name" autoComplete="name" required placeholder="How should I call you?"/></label>
-        <label>Your e-mail<input name="email" type="email" autoComplete="email" required placeholder="you@example.com"/></label>
-        <label className="wide">What would you like to talk about?<textarea name="message" rows="4" required placeholder="A project, an idea, or just hello…"/></label>
-      </div>
-      <button className="pill submit-button" type="submit">Send a note <span>↗</span></button>
-      <small className="form-note">Demo only — your message stays in this browser and is not transmitted.</small>
-    </>}
-  </form>
-}
-
-function CookieNotice() {
-  const [visible, setVisible] = useState(() => !localStorage.getItem('nibir-cookie-choice'))
-  const dismiss = () => { localStorage.setItem('nibir-cookie-choice', 'accepted'); setVisible(false) }
-  if (!visible) return null
-  return <aside className="cookie-card" aria-label="Cookie preferences">
-    <button className="cookie-close" aria-label="Close cookie notice" onClick={dismiss}>×</button>
-    <h2>A little privacy note</h2>
-    <p>This portfolio stores one local preference so it won’t show this note again. No analytics or tracking are enabled.</p>
-    <div className="cookie-actions"><button className="pill pill-dark" onClick={dismiss}>Not now</button><button className="pill pill-light" onClick={dismiss}>Got it</button></div>
-  </aside>
-}
-
-function Footer() {
-  return <footer className="site-footer"><div className="footer-top">
-    <a className="brand brand-large" href="#home" aria-label="Back to top"><span>NK</span></a>
-    <p>Designed with curiosity.<br/>Built with purpose.</p>
-    <a className="pill pill-light" href="#contact">Let’s Connect <span>↗</span></a>
-  </div><div className="footer-bottom"><span>© Nibir Kalita — All rights reserved.</span><span>Assam, India</span><a href="https://github.com/Raag-Nibir" target="_blank" rel="noreferrer">GitHub ↗</a></div></footer>
+function ProjectCard({ project }) {
+  const content = <><ProjectVisual kind={project.visual}/><div className="project-caption"><span className="project-number">{project.number} / {project.category}</span><div className="project-title-row"><h3>{project.name}</h3><span className="project-arrow">↗</span></div><p>{project.description}</p><span className="project-status">{project.status}</span></div></>
+  return project.link
+    ? <a className={`project-card project-${project.visual}`} href={project.link} target="_blank" rel="noreferrer" aria-label={`Visit ${project.name} (opens in a new tab)`}>{content}</a>
+    : <article className={`project-card project-${project.visual}`}>{content}</article>
 }
 
 function App() {
-  const [activeProject, setActiveProject] = useState(null)
-  return <>
-    <div className="site-shell">
-      <Header/>
-      <main>
-        <section className="hero" id="home">
-          <div className="hero-photo" aria-hidden="true"/>
-          <div className="hero-topline"><span className="eyebrow">COMPUTER SCIENCE · DESIGN · BUILDING</span><span>Jorhat, Assam &nbsp;·&nbsp; India</span></div>
-          <div className="hero-title"><h1>Nibir</h1><p>Building digital experiences at the intersection of technology, design, and innovation.</p></div>
-          <div className="hero-bottom"><div>
-            <div className="hero-stats"><span>Developer</span><span>Designer</span><span>Builder at heart</span></div>
-            <h2>Hi, I’m Nibir Kalita.</h2>
-            <p>Computer Science Engineering student at Jorhat Engineering College. I enjoy turning ideas into useful, thoughtful digital products.</p>
-            <div className="hero-actions"><a className="pill pill-light" href="#work">Explore My Work <span>↓</span></a><a className="pill pill-outline" href="#contact">Let’s Connect <span>↗</span></a></div>
-          </div><a className="hero-side-note" href="#about"><span className="availability-dot"/>Open to learning, building &amp; collaborating<span className="side-arrow">↘</span></a></div>
-        </section>
-
-        <section className="client-strip" aria-label="Areas of interest"><span className="eyebrow">CURIOUS ABOUT</span><div>{['Frontend','AI','Blockchain','Product','Visual design','Entrepreneurship'].map(item => <b key={item}>{item}</b>)}</div></section>
-
-        <section className="section featured" id="work"><div className="section-heading"><div><p className="eyebrow">A FEW THINGS I’VE BEEN EXPLORING</p><h2>Selected Work</h2></div><span className="section-aside">Concepts, academic work, and projects — each card shares its scope and current status.</span></div>
-          <div className="project-grid">{projects.map((project, index) => <PortfolioProject key={project.name} project={project} index={index} onOpen={setActiveProject}/>)}</div>
-          <p className="work-footnote">Project descriptions reflect the work and status provided. Concepts and explorations are labeled as such.</p>
-        </section>
-
-        <section className="section about-section" id="about"><div className="section-heading"><div><p className="eyebrow">A BIT ABOUT ME</p><h2>Curious by nature.<br/>Creative by practice.</h2></div><p className="section-aside">Technology is how I solve problems. Design and art help me see them differently.</p></div>
-          <div className="about-copy"><div><p>I’m a developer and creative thinker passionate about technology, design, and problem-solving. My interests span frontend development, database systems, blockchain, and AI-powered applications.</p><p>Alongside coding, I have 10–12 years of artistic experience and a strong interest in graphic design, music, and creative expression. That mix helps me think about both how a product works and how it feels to use.</p></div><div><p>I enjoy collaborating, exploring new ideas, and working on projects that solve real-world problems. My long-term ambition is to build innovative products and eventually create ventures that make a meaningful impact.</p><a className="text-link" href="#creative">A little beyond code <span>↓</span></a></div></div>
-          <div className="about-signoff"><span>01 / HOW I THINK</span><span>Good products balance usefulness, clarity, and a point of view.</span><span>↗</span></div>
-        </section>
-
-        <section className="section skills-section" id="skills"><div className="section-heading"><div><p className="eyebrow">TOOLS I’M LEARNING AND USING</p><h2>Skills &amp; Interests</h2></div><p className="section-aside">A growing toolkit. I care as much about learning the right tool as collecting another one.</p></div>
-          <div className="skill-groups">{skillGroups.map(([group, items], index) => <article className="skill-group" key={group}><span className="skill-number">0{index + 1}</span><div><h3>{group}</h3><div className="tag-list">{items.map(item => <span key={item}>{item}</span>)}</div></div></article>)}</div>
-          <div className="interest-row"><span className="eyebrow">ALWAYS EXPLORING</span><div>{['UI/UX Design','Artificial Intelligence','Blockchain Technology','Full-Stack Development','Product Development','Entrepreneurship'].map(item => <span key={item}>{item}</span>)}</div></div>
-        </section>
-
-        <section className="section experience-section" id="experience"><div className="section-heading"><div><p className="eyebrow">LEARNING BY DOING</p><h2>Experience &amp; Community</h2></div><p className="section-aside">The best learning happens when ideas meet real people and real constraints.</p></div>
-          <div className="experience-list">
-            <article><span className="experience-index">01</span><div><p className="eyebrow">ACADEMIC INTERNSHIP</p><h3>IIT Guwahati</h3><p>Worked on an academic information management portal, focusing on database design, academic record management, and application development.</p></div><span className="experience-arrow">↗</span></article>
-            <article><span className="experience-index">02</span><div><p className="eyebrow">TECH COMMUNITY</p><h3>GLUG · Jorhat Engineering College</h3><p>Part of the GNU/Linux Users Group organizing committee, contributing to technical community activities and events.</p></div><span className="experience-arrow">↗</span></article>
-            <article><span className="experience-index">03</span><div><p className="eyebrow">HACKATHONS &amp; EVENTS</p><h3>Hackvita 4.0</h3><p>Joined hackathon-related activities to explore collaborative problem-solving and product development.</p></div><span className="experience-arrow">↗</span></article>
-          </div>
-        </section>
-
-        <section className="section creative-section" id="creative"><div className="creative-copy"><p className="eyebrow">BEYOND THE SCREEN</p><h2>Different ways<br/>to make things.</h2><p>Technology is only one part of how I express myself. I enjoy graphic design, music, singing, and exploring visual ideas — from Figma and Canva to making sounds in FL Studio.</p><p>I believe the best products combine engineering, aesthetics, and a deep understanding of the people using them.</p><a className="pill pill-outline" href="#contact">Let’s make something <span>↗</span></a></div><div className="creative-art" aria-label="Abstract visual composition representing creativity"><span className="art-disc"/><span className="art-orbit orbit-one"/><span className="art-orbit orbit-two"/><span className="art-caption">FORM · SOUND · FEELING</span><span className="art-coordinate">26°45′N<br/>94°12′E</span></div></section>
-
-        <section className="section focus-section"><div className="section-heading"><div><p className="eyebrow">RIGHT NOW</p><h2>Current Focus</h2></div><p className="section-aside">Small, consistent steps toward thoughtful and useful work.</p></div><div className="focus-grid">{['Building practical software projects','Improving frontend and UI/UX skills','Exploring AI and blockchain applications','Learning product strategy and entrepreneurship','Growing a portfolio of real-world work'].map((item,index)=><article key={item}><span>0{index+1}</span><p>{item}</p><b>↗</b></article>)}</div></section>
-
-        <section className="contact-block" id="contact"><div className="contact-intro"><p className="eyebrow">HAVE AN IDEA OR JUST WANT TO SAY HI?</p><h2>Let’s<br/>talk<span className="period">.</span></h2><p>I’m always happy to connect with curious people, explore a collaboration, or talk through an idea.</p><div className="contact-details"><span>BASED IN</span><strong>Assam, India</strong><a href="https://github.com/Raag-Nibir" target="_blank" rel="noreferrer">GitHub · Raag-Nibir ↗</a><a href="https://github.com/Nibir-Kalita" target="_blank" rel="noreferrer">GitHub · Nibir-Kalita ↗</a><small>Email and LinkedIn links can be added when you’re ready to share them.</small></div></div><ContactForm/></section>
-      </main>
-      <Footer/>
-    </div>
-    <CookieNotice/>
-    <ProjectDialog project={activeProject} onClose={() => setActiveProject(null)}/>
-  </>
+  return <div className="site-shell" id="home">
+    <Header/>
+    <main id="main-content">
+      <section className="hero" aria-labelledby="hero-title">
+        <div className="hero-meta"><span>COMPUTER SCIENCE · DESIGN · BUILDING</span><span>JORHAT, ASSAM / INDIA</span></div><ThreadMark/>
+        <h1 id="hero-title"><span>I BUILD</span><span>DIGITAL</span><span>EXPERIENCES<span className="hero-period">.</span></span></h1>
+        <div className="hero-bottom"><p>Developer, designer, and curious builder turning ideas into useful things.</p><a className="scroll-link" href="#capabilities">SCROLL TO FOLLOW THE THREAD <span>↓</span></a></div>
+        <span className="hero-coordinate">26°45′N<br/>94°12′E</span>
+      </section>
+      <section className="intro-section" id="capabilities">
+        <div className="intro-copy"><p className="eyebrow">A LITTLE ABOUT THE WAY I WORK</p><h2>From what people need<br/>to what feels <em>right.</em></h2><p className="intro-description">I connect human intent, product behavior, and the systems underneath — with curiosity at every step.</p></div>
+        <div className="process-visual" aria-label="A product thread connecting intent, interaction, and systems"><div className="process-line"><span/><span/><span/></div><div className="process-labels"><span>INTENT</span><span>INTERACTION</span><span>SYSTEM</span></div><div className="process-note">ONE QUESTION<br/>CAN START A LOT.</div></div>
+        <div className="capability-heading"><p className="eyebrow">WHAT I LIKE TO WORK ON</p><h2>I BUILD THE EXPERIENCE.<br/>AND THE THINKING BEHIND IT.</h2></div>
+        <div className="capability-grid">{capabilities.map(item => <article className="capability-card" key={item.number}><span>{item.number} / CAPABILITY</span><h3>{item.title}</h3><p>{item.text}</p><b>↗</b></article>)}</div>
+      </section>
+      <section className="projects-section" id="projects">
+        <div className="section-heading"><div><p className="eyebrow">SELECTED EXPLORATIONS / 2023—26</p><h2>Things I’ve<br/>been making<span>.</span></h2></div><p className="section-intro">A mix of academic work, product ideas, and experiments. Each one starts with a question worth exploring.</p></div>
+        <div className="project-grid">{projects.map(project => <ProjectCard key={project.name} project={project}/>)}</div><p className="project-footnote">Work status is noted on each project. Concepts and explorations are presented as such.</p>
+      </section>
+      <section className="about-section" id="about">
+        <div className="about-left"><p className="eyebrow">A HUMAN, NOT JUST A KEYBOARD</p><h2>Curious by<br/>nature.<br/><em>Creative</em><br/>by practice.</h2><div className="about-coordinate">NIBIR KALITA<br/>ASSAM, INDIA</div></div>
+        <div className="about-right"><div className="about-art"><div className="art-ring ring-one"/><div className="art-ring ring-two"/><div className="art-core">NK</div><span>FORM / SOUND / FEELING</span></div><p>I’m a Computer Science Engineering student at Jorhat Engineering College, interested in frontend development, database systems, AI, and blockchain.</p><p>Outside code, I’ve spent years around art and visual design. I enjoy music, making things, and learning how engineering and aesthetics can come together in a product that feels considered.</p><div className="about-signoff"><span>01 / HOW I THINK</span><span>Useful first. Clear always. A little unexpected.</span><span>↗</span></div></div>
+      </section>
+      <section className="experience-section"><div className="section-heading"><div><p className="eyebrow">LEARNING BY DOING</p><h2>Where ideas<br/>meet people.</h2></div><p className="section-intro">A few places where I’ve been able to learn, contribute, and try things out.</p></div><div className="experience-list">
+        <article><span>01</span><div><p className="eyebrow">ACADEMIC INTERNSHIP</p><h3>IIT Guwahati</h3><p>Contributed to an academic information portal, exploring structured workflows, application development, and database design.</p></div><b>↗</b></article>
+        <article><span>02</span><div><p className="eyebrow">TECH COMMUNITY</p><h3>GLUG · Jorhat Engineering College</h3><p>Part of the GNU/Linux Users Group organizing committee, helping bring technical activities and events to the community.</p></div><b>↗</b></article>
+        <article><span>03</span><div><p className="eyebrow">HACKATHONS &amp; EVENTS</p><h3>Hackvita 4.0</h3><p>Explored collaborative problem-solving and rapid product thinking through hackathon activities.</p></div><b>↗</b></article>
+      </div></section>
+      <section className="contact-section" id="contact"><div><p className="eyebrow">HAVE AN IDEA? OR JUST WANT TO SAY HI?</p><h2>Let’s make<br/>something<span>.</span></h2><p>I’m always glad to meet curious people, talk through an idea, or explore a collaboration.</p></div><div className="contact-card"><span>OPEN TO</span><h3>Learning.<br/>Building.<br/>Collaborating.</h3><a href="https://github.com/Raag-Nibir" target="_blank" rel="noreferrer">FIND ME ON GITHUB <b>↗</b></a><a href="https://github.com/Nibir-Kalita" target="_blank" rel="noreferrer">ALSO ON GITHUB <b>↗</b></a><small>Email and LinkedIn can be added when you’re ready to share those details.</small></div></section>
+    </main>
+    <footer className="site-footer"><a className="brand" href="#home">NK<span>—</span></a><p>Designed with curiosity.<br/>Built with purpose.</p><span>© NIBIR KALITA / 2026</span><a href="#home" className="back-top">BACK TO TOP ↑</a></footer>
+  </div>
 }
 
 export default App
