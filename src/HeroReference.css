@@ -7,7 +7,7 @@ body {
   background: #f1f1f1;
 }
 
-.hero {
+.site-shell main .hero {
   height: calc(100svh - 56px);
   min-height: 650px;
   max-height: none;
@@ -15,16 +15,32 @@ body {
   padding: 112px clamp(34px, 7vw, 120px) 64px;
   border: 0;
   border-radius: 48px;
-  background: #0a0a09;
+  background: transparent;
   color: #f1eee6;
   isolation: isolate;
+  overflow: hidden;
+}
+
+.site-shell main .hero.scroll-panel {
+  animation: none;
+}
+
+.site-shell main .hero-bg-shape {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  z-index: 0;
+  pointer-events: none;
 }
 
 /* Leave the logo in the light frame, like the notched corner in the reference. */
 .hero::before {
   content: "";
   position: absolute;
-  z-index: -1;
+  z-index: 2;
   top: 0;
   left: 0;
   width: 104px;
@@ -32,6 +48,19 @@ body {
   border-bottom-right-radius: 28px;
   background: #f1f1f1;
   pointer-events: none;
+}
+
+.site-shell main .hero-meta,
+.site-shell main .hero-intro-layout,
+.site-shell main .hero-intro-copy,
+.site-shell main .hero-portrait {
+  position: relative;
+  z-index: 1;
+}
+
+.site-shell main .hero-intro-layout {
+  position: relative;
+  z-index: 1;
 }
 
 .topbar {
@@ -46,82 +75,82 @@ body {
   display: none;
 }
 
-.nav-links a {
+.topbar .nav-links a {
   color: #f1eee6;
 }
 
-.hero-meta {
+.site-shell main .hero-meta {
   display: none;
 }
 
-.hero-intro-layout {
+.site-shell main .hero-intro-layout {
   grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
   gap: clamp(45px, 7vw, 120px);
   padding: 0;
 }
 
-.hero-portrait {
+.site-shell main .hero-portrait {
   width: 100%;
-  height: min(72svh, 720px);
+  height: min(78svh, 740px);
   min-height: 400px;
-  max-height: 720px;
+  max-height: 740px;
   overflow: visible;
 }
 
-.hero-portrait img {
-  width: 112%;
-  height: 112%;
+.site-shell main .hero-portrait img {
+  width: 100%;
+  height: 100%;
   max-width: none;
   object-fit: contain;
   object-position: center;
   filter: none;
-  transform: rotate(-2deg);
+  transform: none;
 }
 
 .hero-intro-copy {
   padding: 0 0 20px;
 }
 
-.hero-intro-copy .hero-hello {
+.site-shell main .hero-intro-copy .hero-hello {
   color: #f1eee6;
   font-size: clamp(104px, 12vw, 176px);
   margin: 0 0 62px 8px;
 }
 
-.hero-hello .hello-i svg {
+.site-shell main .hero-hello .hello-i svg {
   fill: #ff573d;
 }
 
-.hero-intro-copy h1 {
+.site-shell main .hero-intro-copy h1 {
   color: #f1eee6;
   font-size: clamp(52px, 7.2vw, 104px);
   line-height: 1;
   letter-spacing: 0;
 }
 
-.hero-intro-copy h1 span {
+.site-shell main .hero-intro-copy h1 span {
   font-weight: 400;
 }
 
-.hero-intro-copy h1 i {
+.site-shell main .hero-intro-copy h1 i {
   color: #aaa69e;
 }
 
-.hero-intro-subtitle {
+.site-shell main .hero-intro-subtitle {
   max-width: 430px;
   margin: 38px 0 0;
   color: #aaa79f;
   font-size: clamp(15px, 1.35vw, 18px);
 }
 
-.hero-intro-copy .scroll-link {
+.site-shell main .hero-intro-copy .scroll-link {
   position: absolute;
   left: 0;
   bottom: -58px;
   color: #d0cdc5;
 }
 
-.hero-contact {
+.site-shell main .hero-contact {
   position: absolute;
   right: 0;
   bottom: -58px;
@@ -137,7 +166,7 @@ body {
   line-height: 1;
 }
 
-.hero-contact span {
+.site-shell main .hero-contact span {
   display: grid;
   width: 1.25em;
   height: 1.25em;
@@ -147,32 +176,32 @@ body {
   font-size: 0.9em;
 }
 
-.hero-contact:hover {
+.site-shell main .hero-contact:hover {
   color: #ff573d;
   border-color: #ff573d;
 }
 
 @media (max-width: 850px) {
-  .hero {
+  .site-shell main .hero {
     padding-inline: 5vw;
   }
-  .hero-intro-layout {
+  .site-shell main .hero-intro-layout {
     gap: 30px;
   }
-  .hero-intro-copy .hero-hello {
+  .site-shell main .hero-intro-copy .hero-hello {
     margin-bottom: 44px;
   }
 }
 
 @media (max-width: 620px) {
-  .hero {
+  .site-shell main .hero {
     height: calc(100svh - 28px);
     min-height: 650px;
     margin: 14px;
     padding: 80px 20px 28px;
     border-radius: 30px;
   }
-  .hero::before {
+  .site-shell main .hero::before {
     width: 78px;
     height: 74px;
     border-bottom-right-radius: 23px;
@@ -180,35 +209,35 @@ body {
   .topbar {
     padding-left: 28px;
   }
-  .hero-intro-layout {
+  .site-shell main .hero-intro-layout {
     margin: 0;
   }
-  .hero-portrait {
+  .site-shell main .hero-portrait {
     top: 43%;
     width: min(88vw, 390px);
     height: 64%;
   }
-  .hero-portrait img {
+  .site-shell main .hero-portrait img {
     width: 100%;
     height: 100%;
   }
-  .hero-intro-copy .hero-hello {
+  .site-shell main .hero-intro-copy .hero-hello {
     color: #f1eee6;
     margin: 0;
   }
-  .hero-intro-copy h1 {
+  .site-shell main .hero-intro-copy h1 {
     color: #f1eee6;
     bottom: 20%;
     text-shadow: 0 2px 14px #000;
   }
-  .hero-intro-subtitle {
+  .site-shell main .hero-intro-subtitle {
     display: none;
   }
-  .hero-intro-copy .scroll-link,
-  .hero-contact {
+  .site-shell main .hero-intro-copy .scroll-link,
+  .site-shell main .hero-contact {
     bottom: 5px;
   }
-  .hero-contact {
+  .site-shell main .hero-contact {
     right: 0;
     font-size: 13px;
   }

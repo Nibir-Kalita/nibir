@@ -14,6 +14,7 @@ import About from "./components/About.jsx";
 import Contact from "./components/Contact.jsx";
 import Projects from "./components/Projects.jsx";
 import heroIllustration from "../Group 2.svg";
+import heroBackground from "../Rectangle 3.svg";
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -119,6 +120,12 @@ function App() {
         <Header />
         <main id="main-content">
           <section className="hero scroll-panel" aria-labelledby="hero-title">
+            <img
+              className="hero-bg-shape"
+              src={heroBackground}
+              alt=""
+              aria-hidden="true"
+            />
             <div className="hero-meta">
               <span>COMPUTER SCIENCE · DESIGN · BUILDING</span>
               <span>JORHAT, ASSAM / INDIA</span>
