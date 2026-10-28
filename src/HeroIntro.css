@@ -76,9 +76,6 @@
   line-height: 1.6;
   margin: 25px 0 29px;
 }
-.hero-intro-copy .scroll-link {
-  width: max-content;
-}
 .hero-meta {
   z-index: 1;
   color: #565656;
@@ -170,9 +167,6 @@
     color: #aaa69e;
   }
   .hero-intro-subtitle,
-  .hero-intro-copy .scroll-link {
-    display: none;
-  }
   .hero-bottom {
     display: none;
   }

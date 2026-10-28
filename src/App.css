@@ -10,7 +10,7 @@
   color: #f65b0b;
 }
 .topbar {
-  height: 84px;
+  height: 120px;
   position: absolute;
   z-index: 5;
   inset: 0 0 auto;
@@ -20,23 +20,34 @@
   padding: 0 clamp(22px, 4.2vw, 64px);
 }
 .brand {
-  font-size: 21px;
-  font-weight: 800;
-  letter-spacing: -0.08em;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  height: auto;
+  background: transparent;
+  border-bottom-right-radius: 0;
+  overflow: visible;
+  margin-left: 0;
+  margin-top: 0;
 }
-.brand span {
-  color: #ff573d;
-  margin-left: 4px;
+.brand img {
+  display: block;
+  margin-top:50px;
+  margin-left:25px;
+  width: 72px;
+  height: auto;
+  transform: none;
 }
 .nav-links {
   display: flex;
-  gap: clamp(24px, 5vw, 76px);
+  gap: clamp(18px, 4vw, 54px);
   align-items: center;
 }
 .nav-links a,
 .eyebrow,
 .hero-meta,
-.scroll-link,
 .project-number,
 .project-status,
 .visual-stamp,
@@ -53,7 +64,7 @@
   letter-spacing: 0.11em;
 }
 .nav-links a {
-  font-size: 10px;
+  font-size: 12px;
   color: #010101;
   transition: color 0.2s;
 }
@@ -134,16 +145,6 @@
   line-height: 1.55;
   margin: 0;
   color: #d0cdc5;
-}
-.scroll-link {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  font-size: 9px;
-}
-.scroll-link span {
-  font-size: 19px;
-  color: #ff573d;
 }
 .hero-coordinate {
   position: absolute;
@@ -942,6 +943,19 @@
   .topbar {
     height: 68px;
     padding-inline: 19px;
+  }
+  .brand {
+    width: auto;
+    height: auto;
+    background: transparent;
+    border-bottom-right-radius: 0;
+    margin-left: 0;
+    margin-top: 0;
+  }
+  .brand img {
+    width: 48px;
+    height: auto;
+    transform: none;
   }
   .menu-toggle {
     display: flex;

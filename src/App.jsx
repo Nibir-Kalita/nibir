@@ -15,6 +15,7 @@ import Contact from "./components/Contact.jsx";
 import Projects from "./components/Projects.jsx";
 import heroIllustration from "../Group 2.svg";
 import heroBackground from "../Rectangle 3.svg";
+import nkLogo from "../NK.svg";
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -22,7 +23,7 @@ function Header() {
   return (
     <header className="topbar">
       <a className="brand" href="#home" aria-label="Nibir Kalita home">
-        NK<span>—</span>
+        <img src={nkLogo} alt="NK logo" />
       </a>
       <button
         className="menu-toggle"
@@ -46,9 +47,6 @@ function Header() {
         </a>
         <a href="#about" onClick={closeMenu}>
           ABOUT
-        </a>
-        <a href="#contact" onClick={closeMenu}>
-          CONTACT
         </a>
       </nav>
     </header>
@@ -156,9 +154,6 @@ function App() {
                   Developer, designer, and curious builder turning ideas into
                   useful things.
                 </p>
-                <a className="scroll-link" href="#capabilities">
-                  SCROLL TO EXPLORE <span>↓</span>
-                </a>
                 <a className="hero-contact" href="#contact">
                   CONTACT <span aria-hidden="true">↗</span>
                 </a>
