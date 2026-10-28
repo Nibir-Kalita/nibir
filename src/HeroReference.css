@@ -43,20 +43,6 @@ body {
   background: transparent;
 }
 
-/* Leave the logo in the light frame, like the notched corner in the reference. */
-.hero::before {
-  content: "";
-  position: absolute;
-  z-index: 2;
-  top: 0;
-  left: 0;
-  width: 150px;
-  height: 124px;
-  border-bottom-right-radius: 58px;
-  background: #f1f1f1;
-  pointer-events: none;
-}
-
 .site-shell main .hero-meta,
 .site-shell main .hero-intro-layout,
 .site-shell main .hero-intro-copy,
@@ -202,11 +188,6 @@ body {
     margin: 14px;
     padding: 80px 20px 28px;
     border-radius: 30px;
-  }
-  .site-shell main .hero::before {
-    width: 78px;
-    height: 74px;
-    border-bottom-right-radius: 23px;
   }
   .topbar {
     padding-left: 28px;
