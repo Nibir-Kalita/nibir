@@ -27,12 +27,7 @@
   display: grid;
   place-items: center;
   overflow: hidden;
-  background: radial-gradient(
-    ellipse at 50% 56%,
-    #dededb 0%,
-    #f1f1f1 54%,
-    transparent 73%
-  );
+  background: transparent;
 }
 .hero-portrait img {
   display: block;
@@ -132,18 +127,18 @@
     position: absolute;
     z-index: 2;
     left: 50%;
-    top: 50%;
+    top: 30%;
     transform: translate(-50%, -50%);
     height: 72%;
     min-height: 0;
     max-height: 610px;
     width: min(78vw, 390px);
-    background: radial-gradient(ellipse at center, #dededb 0%, #f1f1f1 72%);
+    background: transparent;
   }
   .hero-portrait img {
     object-fit: contain;
     object-position: center 38%;
-    transform: scale(1.12);
+    transform: scale(1);
   }
   .hero-intro-copy {
     position: absolute;

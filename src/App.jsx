@@ -7,12 +7,13 @@ import "./SignatureFont.css";
 import "./HeroIntro.css";
 import "./HeroIntroFix.css";
 import "./HeroTypography.css";
+import "./HeroReference.css";
 import "./ScrollEffects.css";
 import Capabilities from "./components/Capabilities.jsx";
 import About from "./components/About.jsx";
 import Contact from "./components/Contact.jsx";
 import Projects from "./components/Projects.jsx";
-import fireflyPortrait from "../Firefly.png";
+import heroIllustration from "../Group 2.svg";
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -125,8 +126,8 @@ function App() {
             <div className="hero-intro-layout">
               <div className="hero-portrait scroll-parallax">
                 <img
-                  src={fireflyPortrait}
-                  alt="Portrait of Nibir Kalita"
+                  src={heroIllustration}
+                  alt="Illustrated portrait collage of Nibir Kalita"
                   fetchPriority="high"
                 />
               </div>
@@ -150,6 +151,9 @@ function App() {
                 </p>
                 <a className="scroll-link" href="#capabilities">
                   SCROLL TO EXPLORE <span>↓</span>
+                </a>
+                <a className="hero-contact" href="#contact">
+                  CONTACT <span aria-hidden="true">↗</span>
                 </a>
               </div>
             </div>
